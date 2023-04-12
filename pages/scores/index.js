@@ -56,7 +56,7 @@ async function submitScore() {
 
   return (
     <>
-      <div className="min-h-screen pb-8 bg-cover bg-no-repeat bg-center bg-my-img flex flex-col justify-center content-center">
+      <div className="min-h-screen bg-cover bg-no-repeat bg-center bg-my-img flex flex-col justify-center content-center">
         <div className="drawer drawer-end">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
