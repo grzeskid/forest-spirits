@@ -23,9 +23,6 @@ export default function Table(data) {
 
   console.log(table)
 
-  // console.log(players)
-  console.log(scores)
-
   return (
     <>
       <div className="h-screen bg-cover bg-no-repeat bg-center bg-my-img flex">
@@ -34,27 +31,33 @@ export default function Table(data) {
             {/* head */}
             <thead>
               <tr>
-                <th>Miejsce</th>
-                <th>Punkty</th>
-                <th>Gracz</th>
-                <th>Ilość meczów</th>
-                <th>Sety wygrane</th>
-                <th>Sety przegrane</th>
-                <th>Punkty zdobyte</th>
-                <th>Ilość przegrane</th>
+                <th className="text-center">Miejsce</th>
+                <th className="text-center">Punkty</th>
+                <th className="text-center">Gracz</th>
+                <th className="text-center">Ilość meczów</th>
+                <th className="text-center">Procent wygranych</th>
+                <th className="text-center">Sety wygrane</th>
+                <th className="text-center">Sety przegrane</th>
+                <th className="text-center">+/-</th>
+                <th className="text-center">Punkty zdobyte</th>
+                <th className="text-center">Ilość przegrane</th>
+                <th className="text-center">+/-</th>
               </tr>
             </thead>
             <tbody>
               {table.map((player, i) => (
                 <tr key={i}>
-                  <th>{i + 1}</th>
-                  <th>{player.leaguePoints}</th>
-                  <th>{player.playerName}</th>
-                  <th>{player.games}</th>
-                  <th>{player.wonSets}</th>
-                  <th>{player.lostSets}</th>
-                  <th>{player.pointsWon}</th>
-                  <th>{player.pointsLost}</th>
+                  <th className="text-center">{i + 1}</th>
+                  <th className="text-center">{player.leaguePoints}</th>
+                  <th className="text-center">{player.playerName}</th>
+                  <th className="text-center">{player.games}</th>
+                  <th className="text-center">{player.wonPercentage}</th>
+                  <th className="text-center">{player.wonSets}</th>
+                  <th className="text-center">{player.lostSets}</th>
+                  <th className="text-center">{player.setsDifference}</th>
+                  <th className="text-center">{player.pointsWon}</th>
+                  <th className="text-center">{player.pointsLost}</th>
+                  <th className="text-center">{player.pointsDifference}</th>
                 </tr>
               ))}
             </tbody>
