@@ -43,7 +43,7 @@ export default function Table(data) {
             <thead>
               <tr>
                 <th className="text-center">Miejsce</th>
-                <th className="text-center">Gracz</th>
+                <th className="text-center sticky left-2 z-20">Gracz</th>
                 <th className="text-center">
                   Punkty
                   <div className="flex justify-center w-full py-1">
@@ -149,7 +149,7 @@ export default function Table(data) {
               {table.map((player, i) => (
                 <tr key={i}>
                   <th className="text-center">{i + 1}</th>
-                  <th className="text-center">{player.playerName}</th>
+                  <th className="text-center sticky left-2 z-20">{player.playerName}</th>
                   <th className="text-center">{player.leaguePoints}</th>
                   <th className="text-center">{player.wonPercentage} %</th>
                   <th className="text-center">{player.games}</th>
