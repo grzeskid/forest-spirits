@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
 import { resultsTableHelper } from "../../lib/resultsTableHelper";
+import { useState } from "react";
 
 export async function getServerSideProps() {
   const { data: scores } = await supabase.from("scores").select("*");
@@ -17,9 +18,19 @@ export default function Table(data) {
   const players = data.players;
   const scores = data.scores;
 
-  const table = resultsTableHelper(players, scores)
-    .sort((a, b) => a.leaguePoints - b.leaguePoints)
-    .reverse();
+  const [table, setTable] = useState(
+    resultsTableHelper(players, scores)
+      .sort((a, b) => a.leaguePoints - b.leaguePoints)
+      .reverse()
+  );
+
+  function sort(value) {
+    setTable(
+      resultsTableHelper(players, scores)
+        .sort((a, b) => a[value] - b[value])
+        .reverse()
+    );
+  }
 
   console.log(table);
 
@@ -36,55 +47,100 @@ export default function Table(data) {
                 <th className="text-center">
                   Punkty
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("leaguePoints")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center">
                   Procent wygranych
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("wonPercentage")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center">
-                  Ilość meczów
+                  Mecze
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("games")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center border-l-2 border-slate-400">
                   Sety wygrane
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("wonSets")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center">
                   Sety przegrane
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("lostSets")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center">
                   +/-
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("setsDifference")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center border-l-2 border-slate-400">
                   Punkty zdobyte
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("pointsWon")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center">
                   Punkty przegrane
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("pointsLost")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
                 <th className="text-center">
                   +/-
                   <div className="flex justify-center w-full py-1">
-                    <kbd className="kbd">sortuj ▼</kbd>
+                    <button
+                      className="kbd hover:bg-slate-400 focus:bg-slate-400 uppercase font-light"
+                      onClick={() => sort("pointsDifference")}
+                    >
+                      sortuj ▼
+                    </button>
                   </div>
                 </th>
               </tr>
@@ -97,10 +153,14 @@ export default function Table(data) {
                   <th className="text-center">{player.leaguePoints}</th>
                   <th className="text-center">{player.wonPercentage} %</th>
                   <th className="text-center">{player.games}</th>
-                  <th className="text-center border-l-2 border-slate-400">{player.wonSets}</th>
+                  <th className="text-center border-l-2 border-slate-400">
+                    {player.wonSets}
+                  </th>
                   <th className="text-center">{player.lostSets}</th>
                   <th className="text-center">{player.setsDifference}</th>
-                  <th className="text-center border-l-2 border-slate-400">{player.pointsWon}</th>
+                  <th className="text-center border-l-2 border-slate-400">
+                    {player.pointsWon}
+                  </th>
                   <th className="text-center">{player.pointsLost}</th>
                   <th className="text-center">{player.pointsDifference}</th>
                 </tr>
