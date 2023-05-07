@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import Footer from "../components/Footer";
-import Navigation from "../components/Navigation";
+import Footer from "../../components/Footer";
+import Navigation from "../../components/Navigation";
 import { supabase } from "@/lib/supabaseClient";
+import Link from "next/link";
 
 export async function getServerSideProps () {
-  const { data: scores } = await supabase.from('table-tenis').select('*');
+  const { data: scores } = await supabase.from('petanque').select('*');
   const { data: players } = await supabase.from('players').select('*');
 
     return {
@@ -38,12 +39,12 @@ const handleInputs = (e) => {
 }
 
 async function submitScore() {
-  if (!score || !score.player_1 || !score.player_1_points || !score.player_2 || !score.player_2_points) {
+  if (!score || !score.winner || !score.winner_points || !score.loser) {
     return
   }
   else (
     await supabase
-    .from('scores')
+    .from('petanque')
     .insert(score)
 
   )
@@ -56,7 +57,63 @@ async function submitScore() {
 
   return (
     <>
-      <div className="min-h-screen bg-cover bg-no-repeat bg-center bg-my-img flex flex-col justify-center content-center">
+    <div className="navbar bg-base-100">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+            <li>
+              <Link href="/">Strona główna</Link>
+            </li>
+            <li>
+              <Link href="/petanque/table">Tabela</Link>
+            </li>
+            <li>
+              <Link href="/petanque/scores">Wyniki</Link>
+            </li>
+            <li>
+              <Link href="/petanque/players">Gracze</Link>
+            </li>
+            </ul>
+          </div>
+        </div>
+        <div className="navbar-center hidden lg:flex w-full justify-center">
+          <ul className="menu menu-horizontal px-1">
+            <li className="px-4">
+              <Link href="/">Strona główna</Link>
+            </li>
+            <li className="px-4">
+              <Link href="/petanque/table">Tabela</Link>
+            </li>
+            <li className="px-4">
+              <Link href="/petanque/scores">Wyniki</Link>
+            </li>
+            <li className="px-4">
+              <Link href="/petanque/players">Gracze</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="min-h-screen bg-cover bg-no-repeat bg-center bg-petanque flex flex-col justify-center content-center">
         <div className="drawer drawer-end">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
@@ -85,9 +142,9 @@ async function submitScore() {
                           el.created_at.slice(0,10) === uniqueDays[i]
                         ).map((el, i) => (
                           <tr key={i}>
-                          <td>{el.player_1}</td>
-                          <td>{el.player_1_points} - {el.player_2_points}</td>
-                          <td>{el.player_2}</td>
+                          <td>{el.winner}</td>
+                          <td>{el.winner_points} - {el.loser_points}</td>
+                          <td>{el.loser}</td>
                         </tr>
                         ))}
                       </tbody>
@@ -112,18 +169,18 @@ async function submitScore() {
             <ul className="menu p-4 w-80 bg-base-100 text-base-content">
               {/* <!-- Sidebar content here --> */}
               <li className="py-10">
-                <select onChange={handleInputs} name="player_1" className="select select-bordered w-full max-w-xs">
+                <select onChange={handleInputs} name="winner" className="select select-bordered w-full max-w-xs">
                   <option disabled selected>
-                    Gracz 1
+                    Wygrany
                   </option>
                   {playerData.map((el, i) => (
                     <option key={i}>{el.name}</option>
                   ))}
                 </select>
-                <input onChange={(e) => handleInputs(e)} name="player_1_points" type="number" placeholder="punkty" className="input input-bordered w-full max-w-xs"/>
+                <input onChange={(e) => handleInputs(e)} name="winner_points" type="number" placeholder="punkty" className="input input-bordered w-full max-w-xs"/>
               </li>
               <li className="py-10">
-                <select onChange={handleInputs} name="player_2" className="select select-bordered w-full max-w-xs">
+                <select onChange={handleInputs} name="loser" className="select select-bordered w-full max-w-xs">
                   <option disabled selected>
                     Gracz 2
                   </option>
@@ -131,7 +188,7 @@ async function submitScore() {
                     <option key={i}>{el.name}</option>
                   ))}
                 </select>
-                <input onChange={handleInputs} name="player_2_points" type="number" placeholder="punkty" className="input input-bordered w-full max-w-xs"/>
+                {/* <input onChange={handleInputs} name="player_2_points" type="number" placeholder="punkty" className="input input-bordered w-full max-w-xs"/> */}
               </li>
               <button onClick={submitScore} className="btn">Zapisz</button>
             </ul>

@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "my-img": "url('../assets/baner.jpg')"
+        "my-img": "url('../assets/baner.jpg')",
+        "petanque": "url('../assets/petanque.jpg')"
       }
     },
   },

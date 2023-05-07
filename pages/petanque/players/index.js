@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Footer from "../components/Footer";
-import Navigation from "../components/Navigation";
+import Footer from "../../components/Footer";
+import Navigation from "../../components/Navigation";
 import { supabase } from "@/lib/supabaseClient";
+import Link from "next/link";
 
 export async function getServerSideProps() {
   const { data: players } = await supabase.from('players').select('*');
@@ -47,7 +48,63 @@ export default function Players(data) {
 
   return (
     <>
-      <div className="h-screen bg-cover bg-no-repeat bg-center bg-my-img">
+    <div className="navbar bg-base-100">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+            <li>
+              <Link href="/">Strona główna</Link>
+            </li>
+            <li>
+              <Link href="/petanque/table">Tabela</Link>
+            </li>
+            <li>
+              <Link href="/petanque/scores">Wyniki</Link>
+            </li>
+            <li>
+              <Link href="/petanque/players">Gracze</Link>
+            </li>
+            </ul>
+          </div>
+        </div>
+        <div className="navbar-center hidden lg:flex w-full justify-center">
+          <ul className="menu menu-horizontal px-1">
+            <li className="px-4">
+              <Link href="/">Strona główna</Link>
+            </li>
+            <li className="px-4">
+              <Link href="/petanque/table">Tabela</Link>
+            </li>
+            <li className="px-4">
+              <Link href="/petanque/scores">Wyniki</Link>
+            </li>
+            <li className="px-4">
+              <Link href="/petanque/players">Gracze</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="h-screen bg-cover bg-no-repeat bg-center bg-petanque">
         <div className="drawer drawer-end">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">

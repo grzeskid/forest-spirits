@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-export default function Navigation({sport}) {
-  return (
-    <>
+export default function TableTenis() {
+    return (
+<>
       <div className="navbar bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
@@ -33,10 +33,10 @@ export default function Navigation({sport}) {
               <Link href="/table-tenis/table">Tabela</Link>
             </li>
             <li>
-              <Link href="/scores">Wyniki</Link>
+              <Link href="/table-tenis/scores">Wyniki</Link>
             </li>
             <li>
-              <Link href="/players">Gracze</Link>
+              <Link href="/table-tenis/players">Gracze</Link>
             </li>
             </ul>
           </div>
@@ -50,14 +50,14 @@ export default function Navigation({sport}) {
               <Link href="/table-tenis/table">Tabela</Link>
             </li>
             <li className="px-4">
-              <Link href="/scores">Wyniki</Link>
+              <Link href="/table-tenis/scores">Wyniki</Link>
             </li>
             <li className="px-4">
-              <Link href="/players">Gracze</Link>
+              <Link href="/table-tenis/players">Gracze</Link>
             </li>
           </ul>
         </div>
       </div>
     </>
-  );
+    )
 }
