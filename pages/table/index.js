@@ -3,7 +3,7 @@ import { resultsTableHelper } from "../../lib/resultsTableHelper";
 import { useState } from "react";
 
 export async function getServerSideProps() {
-  const { data: scores } = await supabase.from("scores").select("*");
+  const { data: scores } = await supabase.from("table-tenis").select("*");
   const { data: players } = await supabase.from("players").select("*");
 
   return {
