@@ -44,7 +44,7 @@ async function submitScore() {
   }
   else (
     await supabase
-    .from('scores')
+    .from('table-tenis')
     .insert(score)
 
   )
